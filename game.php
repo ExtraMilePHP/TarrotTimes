@@ -136,6 +136,8 @@ if ($sessionId == "demobypass") {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Tarrot Times</title>
     <style>
     /* Hippie / Banjaran / Tarot aesthetic: warm parchment, gold accents, hand-drawn borders, subtle grain */
@@ -176,6 +178,11 @@ if ($sessionId == "demobypass") {
         color: black;
         /* font-family: 'MorrisRomanBlack'; */
         font-family: 'Calibre';
+        /* display: flex;
+        justify-content: center */
+    }
+
+    .main-content {
         display: flex;
         justify-content: center
     }
@@ -646,7 +653,7 @@ if ($sessionId == "demobypass") {
 
         position: absolute;
         top: 13%;
-        left: 30%;
+        left: 23%;
     }
 
     .controls {
@@ -732,14 +739,14 @@ if ($sessionId == "demobypass") {
             flex-wrap: wrap;
             gap: 8px;
             position: absolute;
-            top: 73%;
+            top: 77%;
             left: 8%;
         }
 
         .card-select {
             position: absolute;
-            top: 2%;
-            left: 35%;
+            top: 6%;
+            left: 31%;
         }
 
         h1 {
@@ -753,117 +760,128 @@ if ($sessionId == "demobypass") {
 </head>
 
 <body>
-    <!-- <?php include ("../actions-default.php");
-    back("game.php"); ?> -->
-    <div class="app">
-        <header>
-            <div class="card-select">
-                <h1>Select any three cards</h1>
-                <!-- <div class="subtitle">A hippie, hand-drawn style three-card spread — Past • Present • Future</div> -->
+    <?php include ("../actions-default.php");
+    back("game.php"); ?>
+
+    <div class="container-fluid">
+        <div class="main-content">
+
+            <div class="app">
+                <header>
+                    <div class="card-select">
+                        <h1>Select any three cards</h1>
+                        <!-- <div class="subtitle">A hippie, hand-drawn style three-card spread — Past • Present • Future</div> -->
+                    </div>
+                    <div class="controls">
+                        <button id="shuffleBtn" class="btn primary">Shuffle & Lay 15</button>
+                        <button id="resetBtn" class="btn">Reset</button>
+                        <button id="exportBtn" class="btn">Copy Reading</button>
+                        <label class="btn" for="shuffleFileInput" style="cursor:pointe; display:none;">Upload Shuffle
+                            Sound</label>
+                        <input id="shuffleFileInput" type="file" accept="audio/*" style="display:none">
+                    </div>
+                </header>
+
+                <div class="stage">
+                    <section class="table">
+                        <svg class="corner-orn orn-left" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true">
+                            <defs>
+                                <linearGradient id="g1" x1="0" x2="1">
+                                    <stop offset="0%" stop-color="#d1a24a" stop-opacity="0.95" />
+                                    <stop offset="100%" stop-color="#a86fb5" stop-opacity="0.9" />
+                                </linearGradient>
+                            </defs>
+                            <g transform="translate(8,8) scale(0.8)">
+                                <circle cx="60" cy="60" r="34" fill="none" stroke="url(#g1)" stroke-width="2"
+                                    opacity="0.12" />
+                                <path d="M60 22 L66 44 L88 50 L70 64 L76 86 L60 74 L44 86 L50 64 L32 50 L54 44 Z"
+                                    fill="none" stroke="url(#g1)" stroke-width="1.6" opacity="0.12" />
+                                <circle cx="60" cy="60" r="4" fill="url(#g1)" opacity="0.12" />
+                                <g stroke="url(#g1)" stroke-width="1.2" opacity="0.08">
+                                    <path d="M60 6 L60 20" />
+                                    <path d="M6 60 L20 60" />
+                                    <path d="M104 60 L118 60" />
+                                    <path d="M60 104 L60 118" />
+                                </g>
+                            </g>
+                        </svg>
+
+                        <svg class="corner-orn orn-right" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true">
+                            <defs>
+                                <linearGradient id="g2" x1="0" x2="1">
+                                    <stop offset="0%" stop-color="#d1a24a" stop-opacity="0.95" />
+                                    <stop offset="100%" stop-color="#a86fb5" stop-opacity="0.9" />
+                                </linearGradient>
+                            </defs>
+                            <g transform="translate(8,8) scale(0.8) rotate(180 60 60)">
+                                <circle cx="60" cy="60" r="34" fill="none" stroke="url(#g2)" stroke-width="2"
+                                    opacity="0.12" />
+                                <path d="M60 22 L66 44 L88 50 L70 64 L76 86 L60 74 L44 86 L50 64 L32 50 L54 44 Z"
+                                    fill="none" stroke="url(#g2)" stroke-width="1.6" opacity="0.12" />
+                                <circle cx="60" cy="60" r="4" fill="url(#g2)" opacity="0.12" />
+                                <g stroke="url(#g2)" stroke-width="1.2" opacity="0.08">
+                                    <path d="M60 6 L60 20" />
+                                    <path d="M6 60 L20 60" />
+                                    <path d="M104 60 L118 60" />
+                                    <path d="M60 104 L60 118" />
+                                </g>
+                            </g>
+                        </svg>
+
+                        <!-- deck visual for shuffle animation (6 layered divs so we can animate each like a small stack shuffle) -->
+                        <div class="deck-area">
+                            <div id="deckStack" class="deck-stack" aria-hidden="true">
+                                <div class="card-layer"></div>
+                                <div class="card-layer"></div>
+                                <div class="card-layer"></div>
+                                <div class="card-layer"></div>
+                                <div class="card-layer"></div>
+                                <div class="card-layer"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid-15" id="grid"></div>
+                    </section>
+
+                    <aside class="sidebar">
+                        <div class="slots">
+                            <div class="slot" data-pos="past" id="slot1">
+                                <div class="label">Past</div>
+                                <div class="inner" id="inner1">(pick a card)</div>
+                            </div>
+                            <div class="slot" data-pos="present" id="slot2">
+                                <div class="label">Present</div>
+                                <div class="inner" id="inner2">(pick a card)</div>
+                            </div>
+                            <div class="slot" data-pos="future" id="slot3">
+                                <div class="label">Future</div>
+                                <div class="inner" id="inner3">(pick a card)</div>
+                            </div>
+                        </div>
+                        <h1>Here is your echoes of destiny</h1>
+
+                        <div class="reading" id="reading">
+                            <h3>Your Reading</h3>
+                            <div id="readingContent" class="muted">Shuffle to begin. When you pick 3 cards, a detailed
+                                interpretation
+                                appears here with a poetic, Banjaran-toned synthesis and action step.</div>
+                        </div>
+                    </aside>
+                </div>
             </div>
-            <div class="controls">
-                <button id="shuffleBtn" class="btn primary">Shuffle & Lay 15</button>
-                <button id="resetBtn" class="btn">Reset</button>
-                <button id="exportBtn" class="btn">Copy Reading</button>
-                <label class="btn" for="shuffleFileInput" style="cursor:pointe; display:none;">Upload Shuffle
-                    Sound</label>
-                <input id="shuffleFileInput" type="file" accept="audio/*" style="display:none">
-            </div>
-        </header>
 
-        <div class="stage">
-            <section class="table">
-                <svg class="corner-orn orn-left" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true">
-                    <defs>
-                        <linearGradient id="g1" x1="0" x2="1">
-                            <stop offset="0%" stop-color="#d1a24a" stop-opacity="0.95" />
-                            <stop offset="100%" stop-color="#a86fb5" stop-opacity="0.9" />
-                        </linearGradient>
-                    </defs>
-                    <g transform="translate(8,8) scale(0.8)">
-                        <circle cx="60" cy="60" r="34" fill="none" stroke="url(#g1)" stroke-width="2" opacity="0.12" />
-                        <path d="M60 22 L66 44 L88 50 L70 64 L76 86 L60 74 L44 86 L50 64 L32 50 L54 44 Z" fill="none"
-                            stroke="url(#g1)" stroke-width="1.6" opacity="0.12" />
-                        <circle cx="60" cy="60" r="4" fill="url(#g1)" opacity="0.12" />
-                        <g stroke="url(#g1)" stroke-width="1.2" opacity="0.08">
-                            <path d="M60 6 L60 20" />
-                            <path d="M6 60 L20 60" />
-                            <path d="M104 60 L118 60" />
-                            <path d="M60 104 L60 118" />
-                        </g>
-                    </g>
-                </svg>
-
-                <svg class="corner-orn orn-right" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true">
-                    <defs>
-                        <linearGradient id="g2" x1="0" x2="1">
-                            <stop offset="0%" stop-color="#d1a24a" stop-opacity="0.95" />
-                            <stop offset="100%" stop-color="#a86fb5" stop-opacity="0.9" />
-                        </linearGradient>
-                    </defs>
-                    <g transform="translate(8,8) scale(0.8) rotate(180 60 60)">
-                        <circle cx="60" cy="60" r="34" fill="none" stroke="url(#g2)" stroke-width="2" opacity="0.12" />
-                        <path d="M60 22 L66 44 L88 50 L70 64 L76 86 L60 74 L44 86 L50 64 L32 50 L54 44 Z" fill="none"
-                            stroke="url(#g2)" stroke-width="1.6" opacity="0.12" />
-                        <circle cx="60" cy="60" r="4" fill="url(#g2)" opacity="0.12" />
-                        <g stroke="url(#g2)" stroke-width="1.2" opacity="0.08">
-                            <path d="M60 6 L60 20" />
-                            <path d="M6 60 L20 60" />
-                            <path d="M104 60 L118 60" />
-                            <path d="M60 104 L60 118" />
-                        </g>
-                    </g>
-                </svg>
-
-                <!-- deck visual for shuffle animation (6 layered divs so we can animate each like a small stack shuffle) -->
-                <div class="deck-area">
-                    <div id="deckStack" class="deck-stack" aria-hidden="true">
-                        <div class="card-layer"></div>
-                        <div class="card-layer"></div>
-                        <div class="card-layer"></div>
-                        <div class="card-layer"></div>
-                        <div class="card-layer"></div>
-                        <div class="card-layer"></div>
-                    </div>
-                </div>
-
-                <div class="grid-15" id="grid"></div>
-            </section>
-
-            <aside class="sidebar">
-                <div class="slots">
-                    <div class="slot" data-pos="past" id="slot1">
-                        <div class="label">Past</div>
-                        <div class="inner" id="inner1">(pick a card)</div>
-                    </div>
-                    <div class="slot" data-pos="present" id="slot2">
-                        <div class="label">Present</div>
-                        <div class="inner" id="inner2">(pick a card)</div>
-                    </div>
-                    <div class="slot" data-pos="future" id="slot3">
-                        <div class="label">Future</div>
-                        <div class="inner" id="inner3">(pick a card)</div>
-                    </div>
-                </div>
-                <h1>Here is your echoes of destiny</h1>
-
-                <div class="reading" id="reading">
-                    <h3>Your Reading</h3>
-                    <div id="readingContent" class="muted">Shuffle to begin. When you pick 3 cards, a detailed
-                        interpretation
-                        appears here with a poetic, Banjaran-toned synthesis and action step.</div>
-                </div>
-            </aside>
+            <!-- audio (user can upload a file; default path is sounds/shuffle.mp3) -->
+            <audio id="shuffleSound" preload="auto">
+                <source src="sounds/shuffle.mp3" type="audio/mpeg">
+                <!-- You can replace the file at sounds/shuffle.mp3 or upload your own using the control -->
+            </audio>
         </div>
+
     </div>
 
-    <!-- audio (user can upload a file; default path is sounds/shuffle.mp3) -->
-    <audio id="shuffleSound" preload="auto">
-        <source src="sounds/shuffle.mp3" type="audio/mpeg">
-        <!-- You can replace the file at sounds/shuffle.mp3 or upload your own using the control -->
-    </audio>
+
 
     <script>
     // Deck (names + meanings + image paths)
