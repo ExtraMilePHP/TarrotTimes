@@ -170,11 +170,12 @@ if ($sessionId == "demobypass") {
     }
 
     body {
-        height: 100vh;
+        /* height: 100vh; */
         background: var(--bg-gradient);
         background-image: url(img/Tarrot_bg_desk.png);
         background-repeat: no-repeat;
         background-size: 100% 100%;
+        background-attachment: fixed;
         color: black;
         /* font-family: 'MorrisRomanBlack'; */
         font-family: 'Calibre';
@@ -739,19 +740,27 @@ if ($sessionId == "demobypass") {
             flex-wrap: wrap;
             gap: 8px;
             position: absolute;
-            top: 77%;
-            left: 8%;
+            top: 13%;
+            left: 11%;
         }
 
         .card-select {
             position: absolute;
-            top: 6%;
+            top: 17%;
             left: 31%;
         }
 
         h1 {
             font-size: 20px;
             text-align: center;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-top: 116px;
         }
 
 
