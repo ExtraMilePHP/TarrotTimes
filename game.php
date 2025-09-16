@@ -138,6 +138,7 @@ if ($sessionId == "demobypass") {
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/sweetalert.min.js"></script>
     <title>Tarrot Times</title>
     <style>
     /* Hippie / Banjaran / Tarot aesthetic: warm parchment, gold accents, hand-drawn borders, subtle grain */
@@ -661,6 +662,10 @@ if ($sessionId == "demobypass") {
         position: absolute;
         top: 13%;
         left: 60%;
+    }
+
+    .swal-footer {
+        text-align: center;
     }
 
     @media screen and (max-width: 768px) {
@@ -1453,6 +1458,8 @@ if ($sessionId == "demobypass") {
     const shuffleBtn = document.getElementById('shuffleBtn');
     const resetBtn = document.getElementById('resetBtn');
     const exportBtn = document.getElementById('exportBtn');
+    // disable copy button initially
+    exportBtn.disabled = true;
     const deckStack = document.getElementById('deckStack');
     const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById(
         'slot3')];
@@ -1523,7 +1530,11 @@ if ($sessionId == "demobypass") {
 
     function onGridClick(idx, el) {
         if (selected.length >= 3) {
-            alert('You already picked 3 cards.');
+            // alert('You already picked 3 cards.');
+            swal({
+                title: 'You already picked 3 cards.',
+                // background: '#fff url(img/correct.png)'
+            });
             return;
         }
         if (el.classList.contains('flipped')) return;
@@ -1576,10 +1587,13 @@ if ($sessionId == "demobypass") {
             html += '</div>';
         });
         html += '<hr />';
-        html += '<div style="margin-bottom:8px;color:#5b4b3a">Synthesis & guidance:</div>';
+        html +=
+            '<div style="margin-bottom:8px;color:#5b4b3a"><strong style="color:var(--accent)">Synthesis & guidance:</strong></div>';
         html += `<div class="small" style="color:#3b2f26">${synthesize(selected)}</div>`;
         readingContent.innerHTML = html;
 
+        // ✅ Enable the Copy button now
+        exportBtn.disabled = false;
 
         // --- NEW: send to server ---
         const payload = {
@@ -1638,7 +1652,7 @@ if ($sessionId == "demobypass") {
             if (/Pentacles/i.test(n)) suitCounts['Pentacles'] = (suitCounts['Pentacles'] || 0) + 1;
         });
         const dom = Object.keys(suitCounts).reduce((a, b) => suitCounts[a] >= (suitCounts[b] || 0) ? a : b, null);
-        if (dom) lines.push(`Suit emphasis: ${dom}. Focus on ${suitSummary(dom)}.`);
+        if (dom) lines.push(`<strong>Suit emphasis:</strong> ${dom}. Focus on ${suitSummary(dom)}.`);
         if (reversedCount >= 2) lines.push(
             'Multiple reversed cards indicate internal blocks; introspection recommended.');
         else if (reversedCount === 1) lines.push('A reversed card suggests a specific area to review.');
@@ -1646,7 +1660,9 @@ if ($sessionId == "demobypass") {
             'Transformation/upheaval is present — allow old structures to fall away.');
         if (names.includes('The Star') || names.includes('The Sun')) lines.push(
             'Positive momentum: hope and recovery are likely.');
-        lines.push('Action: choose one concrete step to take within the next 48 hours that aligns with the message.');
+        lines.push(
+            '<br><strong>Action:</strong> choose one concrete step to take within the next 48 hours that aligns with the message.'
+        );
         return lines.join(' ')
     }
 
@@ -1773,6 +1789,7 @@ if ($sessionId == "demobypass") {
     // --- Shuffle button animates the deck visual using animateDeckShuffle(), then deals cards with staggered animation ---
     shuffleBtn.addEventListener('click', () => {
         readingContent.innerHTML = 'Shuffling the deck...';
+        exportBtn.disabled = true; // make sure copy is disabled whenever shuffle is pressed
 
         // run our animated shuffle (>=2s), then deal the 15 cards
         const fallbackTimeout = setTimeout(() => {
@@ -1801,10 +1818,18 @@ if ($sessionId == "demobypass") {
             s.querySelector('.inner').innerHTML = '(pick a card)'
         });
         readingContent.innerHTML = 'Reset. Click "Shuffle & Lay 15" to begin.'
+        exportBtn.disabled = true; // disable again after reset
     });
     exportBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(readingContent.innerText).then(() => alert('Reading copied'))
+        navigator.clipboard.writeText(readingContent.innerText).then(() => {
+            swal({
+                title: 'Reading copied!',
+                icon: 'success'
+                // background: '#fff url(img/correct.png)'  // optional if you want background
+            });
+        });
     });
+
 
     // initial layout (no shuffle animation on load)
     layOut15();
