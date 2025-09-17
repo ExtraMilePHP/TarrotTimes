@@ -670,6 +670,11 @@ if ($sessionId == "demobypass") {
         text-align: center;
     }
 
+    .sidebar {
+        padding: 35px;
+        border-radius: 14px;
+    }
+
     @media screen and (max-width: 768px) {
         body {
             width: 100%;
@@ -904,6 +909,13 @@ if ($sessionId == "demobypass") {
     .swal-footer {
         text-align: center;
         font-family: 'MorrisRomanBlack';
+    }
+
+    .swal-button:hover {
+        background-color: #d4b35f;
+        /* darker shade */
+        color: white;
+        /* optional */
     }
     </style>
 </head>
