@@ -855,6 +855,7 @@ if ($sessionId == "demobypass") {
         line-height: normal;
         text-align: center;
         margin-bottom: 0;
+        font-family: 'MorrisRomanBlack';
     }
 
     .swal-overlay--show-modal .swal-modal {
@@ -896,6 +897,11 @@ if ($sessionId == "demobypass") {
         box-sizing: content-box;
         margin: 20px auto;
         display: none;
+    }
+
+    .swal-footer {
+        text-align: center;
+        font-family: 'MorrisRomanBlack';
     }
     </style>
 </head>
