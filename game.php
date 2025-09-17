@@ -770,7 +770,7 @@ if ($sessionId == "demobypass") {
 
         .slot .label {
             position: absolute;
-            top: 5px;
+            top: 7px;
             color: #ecc976;
             font-weight: 700;
             text-align: center;
@@ -779,7 +779,7 @@ if ($sessionId == "demobypass") {
 
         .slot .inner {
             width: 90px;
-            height: 140px;
+            height: 155px;
         }
 
 
