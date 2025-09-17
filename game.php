@@ -752,7 +752,7 @@ if ($sessionId == "demobypass") {
             flex-wrap: wrap;
             gap: 8px;
             position: absolute;
-            top: 13%;
+            top: 11%;
             left: 11%;
         }
 
