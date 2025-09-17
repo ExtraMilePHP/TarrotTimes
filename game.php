@@ -768,7 +768,134 @@ if ($sessionId == "demobypass") {
             margin-top: 116px;
         }
 
+        .slot .label {
+            position: absolute;
+            top: 5px;
+            color: #ecc976;
+            font-weight: 700;
+            text-align: center;
+            font-size: xx-large;
+        }
 
+        .slot .inner {
+            width: 90px;
+            height: 140px;
+        }
+
+
+    }
+
+    .swal2-popup.swal2-modal.swal2-show {
+        /* background-image: url(img/correct.png); */
+        background-color: transparent !important;
+        background-position: center !important;
+        background-size: 100% 100% !important;
+        background-repeat: no-repeat;
+        width: 490px !important;
+        height: 370px !important;
+    }
+
+    button.swal2-confirm.swal2-styled {
+        background-color: transparent !important;
+        background-image: url(img/ok.png) !important;
+        background-position: center !important;
+        background-size: 100% 100% !important;
+        background-repeat: no-repeat;
+    }
+
+    .swal2-popup .swal2-header,
+    .swal2-popup .swal2-content,
+    .swal2-popup .swal2-actions {
+        top: 50px;
+        position: relative;
+    }
+
+
+    .my-popup {
+        background-size: 100% 100% !important;
+        background-position: center !important;
+        */ background-image: url(img/correct.png) !important;
+        color: #000 !important;
+        padding: 45px !important;
+        ;
+    }
+
+
+
+    .my-popup .swal2-confirm {
+        background-image: url(img/correct.png) !important;
+        background-size: 100% 100% !important;
+        color: transparent !important;
+        border: none !important;
+        width: 70px;
+        padding: 10px !important;
+    }
+
+    .my-confirm-button img {
+        width: 30px;
+        /* Adjust the size of the image */
+        height: auto;
+    }
+
+    div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):focus-visible {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+
+    .swal-title {
+        color: #ecc976;
+        font-weight: 600;
+        text-transform: none;
+        position: relative;
+        display: block;
+        padding: 13px 16px;
+        font-size: 27px;
+        line-height: normal;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .swal-overlay--show-modal .swal-modal {
+        opacity: 1;
+        pointer-events: auto;
+        box-sizing: border-box;
+        -webkit-animation: showSweetAlert .3s;
+        animation: showSweetAlert .3s;
+        will-change: transform;
+        background-color: black;
+        color: #ecc976 !important;
+    }
+
+    .swal-button {
+        background-color: #ecc976;
+        color: black;
+        border: none;
+        box-shadow: none;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 10px 24px;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .swal-icon swal-icon--success {
+        display: none;
+    }
+
+    .swal-icon {
+        width: 85px;
+        height: 80px;
+        border-width: 4px;
+        border-style: solid;
+        border-radius: 50%;
+        padding: 0;
+        position: relative;
+        box-sizing: content-box;
+        margin: 20px auto;
+        display: none;
     }
     </style>
 </head>
@@ -888,7 +1015,7 @@ if ($sessionId == "demobypass") {
 
             <!-- audio (user can upload a file; default path is sounds/shuffle.mp3) -->
             <audio id="shuffleSound" preload="auto">
-                <source src="sounds/shuffle.mp3" type="audio/mpeg">
+                <!-- <source src="sounds/shuffle.mp3" type="audio/mpeg"> -->
                 <!-- You can replace the file at sounds/shuffle.mp3 or upload your own using the control -->
             </audio>
         </div>
@@ -896,7 +1023,7 @@ if ($sessionId == "demobypass") {
     </div>
 
 
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script>
     // Deck (names + meanings + image paths)
     const FULL_DECK = [{
@@ -1470,7 +1597,7 @@ if ($sessionId == "demobypass") {
     // if no custom upload, default to sounds/shuffle.mp3 (you can replace that file in your project)
     try {
         if (!shuffleSound.src || shuffleSound.src.trim() === '') {
-            shuffleSound.src = 'sounds/shuffle.mp3';
+            // shuffleSound.src = 'sounds/shuffle.mp3';
         }
         // ensure the element tries to preload it
         shuffleSound.load();
@@ -1528,6 +1655,17 @@ if ($sessionId == "demobypass") {
         });
     }
 
+    // Swal.fire({
+    //     title: "",
+    //     width: 500,
+    //     background: `url(img/correct.png)`,
+    //     showCloseButton: false,
+    //     customClass: {
+    //         popup: 'my-popup',
+    //         confirmButton: 'my-confirm-button'
+    //     }
+    // })
+
     function onGridClick(idx, el) {
         if (selected.length >= 3) {
             // alert('You already picked 3 cards.');
@@ -1535,6 +1673,8 @@ if ($sessionId == "demobypass") {
                 title: 'You already picked 3 cards.',
                 // background: '#fff url(img/correct.png)'
             });
+
+
             return;
         }
         if (el.classList.contains('flipped')) return;
