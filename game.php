@@ -219,7 +219,8 @@ if ($sessionId == "demobypass") {
     .controls {
         display: flex;
         gap: 10px;
-        align-items: center
+        align-items: center;
+        font-family: 'MorrisRomanBlack';
     }
 
     .btn {
@@ -662,6 +663,7 @@ if ($sessionId == "demobypass") {
         position: absolute;
         top: 13%;
         left: 60%;
+        font-family: 'MorrisRomanBlack';
     }
 
     .swal-footer {
