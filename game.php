@@ -276,7 +276,7 @@ if ($sessionId == "demobypass") {
     .slot {
         border: 2px dashed rgba(0, 0, 0, .2);
         border-radius: 10px;
-        padding: 12px;
+        padding: 5px;
         min-height: 84px;
         background: rgba(255, 255, 255, .6);
         margin-bottom: 12px;
