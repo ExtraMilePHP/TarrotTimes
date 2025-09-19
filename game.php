@@ -477,7 +477,7 @@ if ($sessionId == "demobypass") {
 
         /* Adjust the header */
         .title-head h1 {
-            font-size: 1.2rem;
+            font-size: 2.2rem;
             /* Make the header smaller */
         }
 
@@ -512,10 +512,16 @@ if ($sessionId == "demobypass") {
         }
     }
 
+    h1 {
+        margin: 0 0 6px;
+        font-size: 25px;
+        text-shadow: 1px 1px #e0d6c0;
+    }
+
     .msg {
 
         text-align: left;
-        font-size: 12px;
+        font-size: 16px;
 
     }
 
@@ -558,6 +564,12 @@ if ($sessionId == "demobypass") {
             margin: 0 auto;
             position: relative;
             opacity: 0;
+        }
+
+        h1 {
+
+            font-size: 18px;
+
         }
 
     }
