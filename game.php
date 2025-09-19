@@ -474,6 +474,15 @@ if ($sessionId == "demobypass") {
             /* Adjust this value as needed */
         }
 
+        .card {
+            width: 85px;
+            height: 140px;
+            perspective: 800px;
+            margin: 0 auto;
+            position: relative;
+            opacity: 0;
+        }
+
     }
     </style>
 </head>
