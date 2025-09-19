@@ -460,6 +460,62 @@ if ($sessionId == "demobypass") {
 
     }
 
+    @media screen and (max-width: 480px) {
+
+        /* Further reduce the card size */
+        .card {
+            width: 70px;
+            height: 100px;
+        }
+
+        /* Adjust the grid layout */
+        .grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            /* Even smaller gap */
+        }
+
+        /* Adjust the header */
+        .title-head h1 {
+            font-size: 1.2rem;
+            /* Make the header smaller */
+        }
+
+        /* Smaller text for hints */
+        .hint {
+            font-size: 0.7rem;
+        }
+
+        /* Adjust buttons */
+        button {
+            font-size: 0.8rem;
+            padding: 6px 10px;
+            /* Smaller button padding */
+        }
+
+        /* Reduce padding in the reading section */
+        .reading {
+            padding: 8px;
+        }
+
+        .slot {
+            font-size: 0.7rem;
+            /* Smaller font size in slots */
+        }
+
+        .wrap {
+            display: grid;
+            grid-template-columns: 360px 800px;
+            justify-content: center;
+            gap: 20px;
+            padding: 12px;
+        }
+    }
+
+
+
+    @media screen and (min-width:320px) and (max-width:1100px) and (orientation:landscape) {}
+
     @media screen and (max-width: 768px) {
         body {
             width: 100%;
