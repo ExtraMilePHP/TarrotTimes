@@ -600,67 +600,75 @@ if ($sessionId == "demobypass") {
         return arr;
     }
 
-    function dealNine() {
-        picked = [];
-        updatePicked();
-        results.innerHTML = '';
-        document.getElementById('slot1').textContent = 'Card 1 will appear here…';
-        document.getElementById('slot2').textContent = 'Card 2 will appear here…';
-        document.getElementById('slot3').textContent = 'Card 3 will appear here…';
+  let shuffleTimer; // keep reference for timeout
 
-        // choose 9 out of pool randomly
-        dealt = shuffleArray([...CARD_POOL]).slice(0, 9);
+function dealNine() {
+    picked = [];
+    updatePicked();
+    results.innerHTML = '';
+    document.getElementById('slot1').textContent = 'Card 1 will appear here…';
+    document.getElementById('slot2').textContent = 'Card 2 will appear here…';
+    document.getElementById('slot3').textContent = 'Card 3 will appear here…';
 
-        // make stack visuals
-        stack.innerHTML = '';
-        grid.innerHTML = '';
-        hint.textContent = 'Shuffling the deck…';
+    // Reset containers
+    stack.innerHTML = '';
+    grid.innerHTML = '';
+    hint.textContent = 'Shuffling the deck…';
 
-        const stackFrag = document.createDocumentFragment();
-        const delays = [];
-        for (let i = 0; i < 9; i++) {
-            const c = createCardElement(dealt[i], true); // true = initially facedown only
-            c.style.setProperty('--delay', `${(i%3)*110}ms`);
-            c.style.setProperty('--dx', `${(Math.random()*40+10)|0}px`);
-            c.style.setProperty('--dy', `${(-Math.random()*40-10)|0}px`);
-            c.style.setProperty('--rot', `${(Math.random()*14+4).toFixed(1)}deg`);
-            c.classList.add('card');
-            stackFrag.appendChild(c);
-            delays.push((i % 3) * 110);
-        }
-        stack.appendChild(stackFrag);
+    // choose 9 out of pool randomly
+    dealt = shuffleArray([...CARD_POOL]).slice(0, 9);
 
-        // play riffle animation
-        stack.classList.add('shuffle-start');
-
-        // After animation, fade stack and place to grid
-        const totalTime = 1200; // a hair over animation
-        setTimeout(() => {
-            stack.classList.remove('shuffle-start');
-            stack.classList.add('fade-stack');
-            hint.textContent = 'Pick any three cards.';
-
-            // lay into grid with subtle stagger
-            const gridFrag = document.createDocumentFragment();
-            dealt.forEach((cardData, idx) => {
-                const g = createCardElement(cardData, true);
-                g.style.opacity = '0';
-                gridFrag.appendChild(g);
-                // staggered reveal
-                setTimeout(() => {
-                    g.style.transition = 'opacity .35s ease';
-                    g.style.opacity = '1';
-                }, 120 + idx * 60);
-            });
-            grid.appendChild(gridFrag);
-
-            // Remove the stack after fade
-            setTimeout(() => {
-                stack.innerHTML = '';
-                stack.classList.remove('fade-stack');
-            }, 800);
-        }, totalTime);
+    const stackFrag = document.createDocumentFragment();
+    for (let i = 0; i < 9; i++) {
+        const c = createCardElement(dealt[i], true);
+        c.style.setProperty('--delay', `${(i % 3) * 110}ms`);
+        c.style.setProperty('--dx', `${(Math.random() * 40 + 10) | 0}px`);
+        c.style.setProperty('--dy', `${(-Math.random() * 40 - 10) | 0}px`);
+        c.style.setProperty('--rot', `${(Math.random() * 14 + 4).toFixed(1)}deg`);
+        c.classList.add('card');
+        stackFrag.appendChild(c);
     }
+    stack.appendChild(stackFrag);
+
+    // play riffle animation
+    stack.classList.add('shuffle-start');
+
+    // clear any previous timer
+    if (shuffleTimer) clearTimeout(shuffleTimer);
+
+    // After animation, fade stack and place to grid
+    shuffleTimer = setTimeout(() => {
+        stack.classList.remove('shuffle-start');
+        stack.classList.add('fade-stack');
+        hint.textContent = 'Pick any three cards.';
+
+        const gridFrag = document.createDocumentFragment();
+        dealt.forEach((cardData, idx) => {
+            const g = createCardElement(cardData, true);
+            g.style.opacity = '0';
+            gridFrag.appendChild(g);
+
+            setTimeout(() => {
+                g.style.transition = 'opacity .35s ease';
+                g.style.opacity = '1';
+            }, 120 + idx * 60);
+        });
+        grid.appendChild(gridFrag);
+
+        setTimeout(() => {
+            stack.innerHTML = '';
+            stack.classList.remove('fade-stack');
+        }, 800);
+    }, 1200);
+}
+
+btnReshuffle.addEventListener('click', () => {
+    // reset grid & stack immediately
+    stack.innerHTML = '';
+    grid.innerHTML = '';
+    dealNine();
+});
+
 
     function createCardElement(cardData, facedown) {
         const wrap = document.createElement('div');
