@@ -30,6 +30,11 @@ $sessionId = $_SESSION['sessionId'];
 ?>
 
     <style>
+    @font-face {
+        font-family: 'MorrisRomanBlack';
+        src: url('fonts/MorrisRomanBlack.otf');
+    }
+
     .bg {
         width: 100%;
         height: 100%;
@@ -63,6 +68,12 @@ $sessionId = $_SESSION['sessionId'];
         color: black;
     }
 
+    .title-head {
+        text-align: center;
+        margin-top: 6%;
+        font-family: 'MorrisRomanBlack';
+    }
+
     @media screen and (max-width: 768px) {
         .bg {
             width: 100%;
@@ -81,6 +92,12 @@ $sessionId = $_SESSION['sessionId'];
             width: 20%;
         }
 
+        .title-head {
+            text-align: center;
+            margin-top: 25%;
+            font-family: 'MorrisRomanBlack';
+        }
+
     }
     </style>
 </head>
@@ -89,6 +106,10 @@ $sessionId = $_SESSION['sessionId'];
 
     <?php include("../actions-default.php");
     back($base_url); ?>
+
+    <div class="title-head">
+        <h1>Digital First Week</h1>
+    </div>
 
     <div class="container-fluid content" style="">
         <div class="row homepage" style="">

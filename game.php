@@ -512,7 +512,12 @@ if ($sessionId == "demobypass") {
         }
     }
 
+    .msg {
 
+        text-align: left;
+        font-size: 12px;
+
+    }
 
     @media screen and (min-width:320px) and (max-width:1100px) and (orientation:landscape) {}
 
@@ -564,7 +569,7 @@ if ($sessionId == "demobypass") {
     back("game.php"); ?>
 
     <div class="title-head">
-        <h1>Select any three cards</h1>
+        <h1>Want to know what your Digital Future holds? Select any three cards to know more…</h1>
     </div>
 
 
@@ -594,6 +599,9 @@ if ($sessionId == "demobypass") {
                 <div class="slot" id="slot3">Card 3 will appear here…</div>
             </div>
             <div id="results"></div>
+            <p class="msg"> Look for emails from Quess Academy to explore our Digital First: Everday Excellence Learning
+                Series on
+                AI tools.</p>
         </aside>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
