@@ -444,6 +444,22 @@ if ($sessionId == "demobypass") {
         margin-top: 0px !important;
     }
 
+    @media (min-width: 600px) and (max-width: 1200px) {
+
+        .wrap {
+            display: grid;
+            grid-template-columns: 360px 400px;
+            /* right side slightly wider */
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            /* min-height: 100vh; */
+            box-sizing: border-box;
+            height: auto;
+        }
+
+    }
+
     @media screen and (max-width: 768px) {
         body {
             width: 100%;
